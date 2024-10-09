@@ -136,6 +136,10 @@ public:
       auto next = timeout_ * 2;
       if (next <= std::chrono::seconds(120))
         timeout_ = next;
+      else {
+        URCL_LOG_WARN("Failed to connect too many times, stopping...");
+        return false;
+      }
     }
 
     return false;
