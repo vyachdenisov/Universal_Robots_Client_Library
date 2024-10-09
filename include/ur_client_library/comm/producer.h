@@ -127,11 +127,13 @@ public:
       if (stream_.closed())
         return false;
 
-      URCL_LOG_WARN("Failed to read from stream, reconnecting in %ld seconds...", timeout_.count());
+      URCL_LOG_WARN("::::Failed to read from stream, reconnecting in %ld seconds...", timeout_.count());
       std::this_thread::sleep_for(timeout_);
 
-      if (stream_.connect())
+      if (stream_.connect()){
+        URCL_LOG_WARN("Connected");
         continue;
+      }
 
       auto next = timeout_ * 2;
       if (next <= std::chrono::seconds(120))
